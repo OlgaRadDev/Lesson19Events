@@ -13,75 +13,93 @@
 
     const menuContent = [
         {
-            innerText: 'Dropdown link',
-            // className: 'dropdownLink',
+            innerText: 'Main item',
+            className: 'mainMenu',
+            classItem: 'mainMenuItem',
             innerItems: [
+
                 {
-                    innerText: 'Action',
-                    classNameItem: 'innerItem'
+                    innerText: 'Sub item',
+                    className: 'subMenu',
+                    classItem: 'subMenuItem'
                 },
                 {
-                    innerText: 'Another action',
-                    classNameItem: 'innerItem'
+                    innerText: 'Sub item',
+                    classItem: 'subMenuItem'
                 },
                 {
-                    innerText: 'Submenu',
-                    className: 'innerItem',
+                    innerText: 'Sub menu',
+                    classItem: 'subMenuItems',
+                    // classItem: 'subMenuItems',
                     innerItems: [
                         {
-                            innerText: 'SubItem',
-                            className: 'innerItem'
+                            innerText: 'Sub Item',
+                            className: 'subMenu2',
+                            classItem: 'subMenuItem'
                         },
                         {
-                            innerText: 'SubItem',
-                            className: 'innerItem'
+                            innerText: 'Sub Item',
+                            classItem: 'subMenuItem'
+
                         },
                         {
-                            innerText: 'SubItem',
-                            className: 'innerItem'
+                            innerText: 'Sub Item',
+                            classItem: 'subMenuItem'
+
                         },
                         {
-                            innerText: 'SubItem',
-                            className: 'innerItem'
+                            innerText: 'Sub Item',
+                            classItem: 'subMenuItem'
+
                         }
                     ]
                 },
                 {
-                    innerText: 'Submenu2',
-                    className: 'innerItem'
+                    innerText: 'Sub item',
+                    classItem: 'subMenuItem'
+
                 }
 
             ],
 
         },
         {
-            innerText: 'Dropdown link',
+            innerText: 'Main item',
+            classItem: 'mainMenuItem'
 
         },
         {
-            innerText: 'Dropdown link',
+            innerText: 'Main item',
+            classItem: 'mainMenuItem'
 
         },
         {
-            innerText: 'Dropdown link',
+            innerText: 'Main item',
+            classItem: 'mainMenuItem'
 
         }
 
     ];
 
     const $navBox = document.createElement('nav');
-    $navBox.classList.add('container');
-    document.body.prepend($navBox);
+    document.body.append($navBox);
 
     const listBuild = (data, parentSelector) => {
         const $ul = document.createElement('ul');
-
+        if (data.className) {
+            $ul.classList.add(data.className);
+        }
 
         data.forEach(listItem => {
             const $li = document.createElement('li');
-            // $li.classList.add(listItem.className);
+            if (listItem.className) {
+                $ul.classList.add(listItem.className);
+            }
+            if (listItem.classItem) {
+                $li.classList.add(listItem.classItem);
+            }
             const itemLink = document.createElement('a');
-            itemLink.setAttribute('href', '#');
+            itemLink.setAttribute('href', 'https://learn.javascript.ru');
             itemLink.innerText = listItem.innerText;
             $li.append(itemLink);
 
@@ -92,13 +110,35 @@
         });
 
         parentSelector.append($ul);
-        $ul.classList.add('dropdownLink');
     };
 
     listBuild(menuContent, $navBox);
 
-    container.append($navBox);
-</script>
+    let subElem = document.querySelector('.mainMenuItem');
+    subElem.addEventListener('click', function () {
+            subElem.classList.add('open');
+    });
 
+    let subEl = document.querySelector('.subMenuItems');
+    subEl.addEventListener('click', function () {
+        subEl.classList.add('open');
+
+    });
+    container.append($navBox);
+    const $allLi = document.querySelectorAll('li');
+
+    $allLi.forEach(item => {
+        item.addEventListener('click', (eventObj) => {
+            eventObj.preventDefault();
+
+            const isMove = confirm('Хотите перейти по ссылке или остаться на странице?');
+            if (isMove) {
+                const linkFromHref = eventObj.target.getAttribute('href');
+                window.location.href = linkFromHref;
+            }
+        })
+    });
+
+</script>
 </body>
 </html>
