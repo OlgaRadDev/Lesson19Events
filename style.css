@@ -49,9 +49,6 @@
 .mainMenuItem.open > ul {
     display:block;
 }
-.mainMenuItem.close > ul {
-    display:block;
-}
 
 .subMenuItems ul {
     display:none;
